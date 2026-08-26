@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Suppliers')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="mb-1">Suppliers</h2>
+                    <p class="text-muted mb-0">Who your books are sourced from.</p>
+                </div>
+                <a th:href="@{/admin/suppliers/new}" class="btn btn-primary">+ Add Supplier</a>
+            </div>
+
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <div class="lh-card p-3 mb-3">
+                <form th:action="@{/admin/suppliers}" method="get" class="d-flex gap-2">
+                    <input type="text" name="keyword" th:value="${keyword}" class="form-control"
+                           placeholder="Search suppliers...">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+            </div>
+
+            <div class="lh-card">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th># Books</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="supplier : ${suppliers.content}">
+                                <td th:text="${supplier.name}">Supplier</td>
+                                <td th:text="${supplier.phone ?: '-'}">Phone</td>
+                                <td th:text="${supplier.email ?: '-'}">Email</td>
+                                <td th:text="${supplier.books.size()}">0</td>
+                                <td class="text-end">
+                                    <a th:href="@{/admin/suppliers/{id}/edit(id=${supplier.id})}"
+                                       class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form th:action="@{/admin/suppliers/{id}/delete(id=${supplier.id})}" method="post"
+                                          class="d-inline" onsubmit="return confirm('Delete this supplier?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${suppliers.content.isEmpty()}">
+                                <td colspan="5" class="text-center text-muted py-4">No suppliers yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3" th:if="${suppliers.totalPages > 1}">
+                    <nav th:replace="~{fragments/pagination :: pager(page=${suppliers}, baseUrl='/admin/suppliers', keyword=${keyword})}"></nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

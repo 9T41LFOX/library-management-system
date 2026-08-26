@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Admin Dashboard')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="mb-4">
+                <h2 class="mb-1">Admin Dashboard</h2>
+                <p class="text-muted mb-0">A snapshot of today's library activity.</p>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.totalBooks}">0</div>
+                        <div class="lh-stat-label">Total Books</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.availableBooks}">0</div>
+                        <div class="lh-stat-label">Available Copies</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.borrowedBooks}">0</div>
+                        <div class="lh-stat-label">Currently Borrowed</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.totalMembers}">0</div>
+                        <div class="lh-stat-label">Members</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.totalCategories}">0</div>
+                        <div class="lh-stat-label">Categories</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.totalSuppliers}">0</div>
+                        <div class="lh-stat-label">Suppliers</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.todayBorrowCount}">0</div>
+                        <div class="lh-stat-label">Issued Today</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="|$${stats.totalFineCollected}|">$0</div>
+                        <div class="lh-stat-label">Fines Collected</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lh-card p-3">
+                <h5 class="mb-3">Recent Activity</h5>
+                <ul class="list-unstyled mb-0">
+                    <li class="py-2 border-bottom" th:each="activity : ${stats.recentActivities}">
+                        <span th:text="${activity.description}">Activity</span>
+                        <span class="text-muted small float-end" th:text="${activity.date}">Date</span>
+                    </li>
+                    <li class="text-muted py-2" th:if="${stats.recentActivities.isEmpty()}">No recent activity yet.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

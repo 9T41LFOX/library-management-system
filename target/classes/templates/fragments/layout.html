@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="|${title} · LibraryHub|">LibraryHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<aside th:fragment="sidebar" class="lh-sidebar">
+    <a th:href="@{/dashboard}" class="lh-brand text-decoration-none d-block">Library<span>Hub</span></a>
+    <nav class="nav flex-column">
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/dashboard}">Dashboard</a>
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/books}">Books</a>
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/categories}">Categories</a>
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/suppliers}">Suppliers</a>
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/members}">Members</a>
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/borrow}">Borrow / Return</a>
+        <a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/admin/reports}">Reports</a>
+        <hr sec:authorize="hasRole('ADMIN')">
+
+        <a class="nav-link" sec:authorize="hasRole('USER')" th:href="@{/user/dashboard}">Dashboard</a>
+        <a class="nav-link" sec:authorize="hasRole('USER')" th:href="@{/profile}">My Profile</a>
+
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/books}">Read Books</a>
+    </nav>
+</aside>
+
+<nav th:fragment="navbar" class="navbar navbar-expand lh-topbar px-4 justify-content-between">
+    <span class="text-muted small">Welcome back</span>
+    <div class="d-flex align-items-center gap-3">
+        <span class="text-muted small" sec:authentication="name">username</span>
+        <form th:action="@{/logout}" method="post" class="mb-0">
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Log out</button>
+        </form>
+    </div>
+</nav>
+
+<th:block th:fragment="scripts">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/custom.js}"></script>
+</th:block>
+
+</html>

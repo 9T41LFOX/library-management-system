@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Reports')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="mb-4">
+                <h2 class="mb-1">Reports</h2>
+                <p class="text-muted mb-0">Keep on top of overdue books and outstanding fines.</p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-sm-6">
+                    <a th:href="@{/admin/reports/overdue}" class="lh-card p-4 d-block text-decoration-none">
+                        <h5 class="mb-1">Overdue Books</h5>
+                        <p class="text-muted mb-0">Loans that are past their due date and still not returned.</p>
+                    </a>
+                </div>
+                <div class="col-sm-6">
+                    <a th:href="@{/admin/reports/fines}" class="lh-card p-4 d-block text-decoration-none">
+                        <h5 class="mb-1">Fine Collection</h5>
+                        <p class="text-muted mb-0">Every returned loan that came back with a fine attached.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

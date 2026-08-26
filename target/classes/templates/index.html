@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Welcome')}"></head>
+<body>
+
+<nav class="navbar navbar-expand lh-topbar px-4 justify-content-between">
+    <a class="lh-brand text-dark text-decoration-none" th:href="@{/}">Library<span class="text-danger">Hub</span></a>
+    <div>
+        <a th:href="@{/login}" class="btn btn-outline-primary btn-sm me-2">Log in</a>
+        <a th:href="@{/register}" class="btn btn-primary btn-sm">Join the library</a>
+    </div>
+</nav>
+
+<section class="lh-hero text-center">
+    <div class="container">
+        <div class="lh-gold-rule mx-auto"></div>
+        <h1>Every book. One shelf. No spreadsheets.</h1>
+        <p class="lead" style="max-width:560px;margin:0 auto;">
+            LibraryHub keeps track of who has what, what's overdue, and what's owed - so you don't have to.
+        </p>
+        <div class="mt-4">
+            <a th:href="@{/register}" class="btn btn-lg btn-light me-2">Become a member</a>
+            <a th:href="@{/login}" class="btn btn-lg btn-outline-light">Staff login</a>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <h3 class="h5">Borrow &amp; Return</h3>
+            <p class="text-muted">Check out up to 3 books at a time, for 15 days each.</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="h5">Automatic Fines</h3>
+            <p class="text-muted">$2 a day after the due date - calculated the moment a book comes back.</p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="h5">Full Visibility</h3>
+            <p class="text-muted">Admins see the whole collection; members see exactly what they owe.</p>
+        </div>
+    </div>
+</section>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

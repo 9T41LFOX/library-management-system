@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(title='Category')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <h2 class="mb-4" th:text="${category.id} != null ? 'Edit Category' : 'Add Category'">Add Category</h2>
+
+            <div class="lh-card p-4" style="max-width:480px;">
+                <form th:action="@{/admin/categories/save}" th:object="${category}" method="post" class="needs-validation" novalidate>
+                    <input type="hidden" th:field="*{id}">
+                    <div class="mb-3">
+                        <label class="form-label">Category Name</label>
+                        <input type="text" class="form-control" th:field="*{name}" required
+                               th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a th:href="@{/admin/categories}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

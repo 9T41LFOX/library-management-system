@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(title='Borrow Records')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="mb-1">Borrow Records</h2>
+                    <p class="text-muted mb-0">Every issue &amp; return, past and present.</p>
+                </div>
+                <a th:href="@{/admin/borrow/issue}" class="btn btn-primary">+ Issue Book</a>
+            </div>
+
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <div class="lh-card p-3 mb-3">
+                <form th:action="@{/admin/borrow}" method="get" class="d-flex gap-2">
+                    <input type="text" name="keyword" th:value="${keyword}" class="form-control" placeholder="Search by book title or member name...">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+            </div>
+
+            <div class="lh-card">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr><th>Member</th><th>Book</th><th>Issued</th><th>Due</th><th>Returned</th><th>Fine</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="b : ${borrows.content}">
+                                <td th:text="${b.member.name}">Member</td>
+                                <td th:text="${b.book.title}">Book</td>
+                                <td th:text="${#temporals.format(b.issueDate, 'MMM d, yyyy')}">Date</td>
+                                <td th:text="${#temporals.format(b.dueDate, 'MMM d, yyyy')}">Date</td>
+                                <td th:text="${b.returnDate != null ? #temporals.format(b.returnDate, 'MMM d, yyyy') : '-'}">-</td>
+                                <td th:text="|$${b.fine}|">$0</td>
+                                <td>
+                                    <span class="badge badge-issued" th:if="${b.status.name() == 'ISSUED'}">Issued</span>
+                                    <span class="badge badge-returned" th:if="${b.status.name() == 'RETURNED'}">Returned</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${borrows.content.isEmpty()}">
+                                <td colspan="7" class="text-center text-muted py-4">No borrow records yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3" th:if="${borrows.totalPages > 1}">
+                    <nav th:replace="~{fragments/pagination :: pager(page=${borrows}, baseUrl='/admin/borrow', keyword=${keyword})}"></nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

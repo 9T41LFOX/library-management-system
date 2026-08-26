@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='My Dashboard')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="mb-4">
+                <h2 class="mb-1" th:text="|Welcome, ${member.name}|">Welcome</h2>
+                <p class="text-muted mb-0">Here's what's on your account right now.</p>
+            </div>
+
+            <div class="row g-3 mb-4">
+                <div class="col-sm-4">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.borrowedBooks.size()}">0</div>
+                        <div class="lh-stat-label">Active Loans</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="${stats.returnedBooksCount}">0</div>
+                        <div class="lh-stat-label">Books Returned</div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="lh-card lh-stat-card">
+                        <div class="lh-stat-value" th:text="|$${stats.currentFine}|">$0</div>
+                        <div class="lh-stat-label">Current Fine</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lh-card p-3 mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Your Active Loans</h5>
+                    <a th:href="@{/books}" class="btn btn-primary btn-sm">Read Books</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Due Date</th>
+                                <th class="text-end">Digital Copy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="borrow : ${stats.borrowedBooks}">
+                                <td th:text="${borrow.book.title}">Title</td>
+                                <td th:text="${borrow.dueDate}">Due date</td>
+                                <td class="text-end">
+                                    <a th:if="${borrow.book.pdfFileName != null}"
+                                       th:href="@{/books/{id}/read(id=${borrow.book.id})}"
+                                       class="btn btn-outline-primary btn-sm">Read Book</a>
+                                    <span th:if="${borrow.book.pdfFileName == null}" class="text-muted small">PDF not available</span>
+                                </td>
+                            </tr>
+                            <tr th:if="${stats.borrowedBooks.isEmpty()}">
+                                <td colspan="3" class="text-center text-muted py-4">No active loans right now.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

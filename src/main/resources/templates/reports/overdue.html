@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Overdue Books')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="mb-1">Overdue Books</h2>
+                    <p class="text-muted mb-0" th:text="|As of ${#temporals.format(today, 'MMM d, yyyy')}|">As of</p>
+                </div>
+                <a th:href="@{/admin/reports}" class="btn btn-outline-secondary btn-sm">&larr; Back to reports</a>
+            </div>
+
+            <div class="lh-card">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th>Book</th>
+                                <th>Due Date</th>
+                                <th>Days Late</th>
+                                <th>Estimated Fine</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="b : ${overdueBorrows}">
+                                <td th:text="${b.member.name}">Member</td>
+                                <td th:text="${b.book.title}">Book</td>
+                                <td th:text="${#temporals.format(b.dueDate, 'MMM d, yyyy')}">Date</td>
+                                <td th:text="${daysLate[b.id]}">0</td>
+                                <td th:text="|$${estimatedFines[b.id]}|">$0</td>
+                            </tr>
+                            <tr th:if="${overdueBorrows.isEmpty()}">
+                                <td colspan="5" class="text-center text-muted py-4">No overdue books right now.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

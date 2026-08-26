@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Log in')}"></head>
+<body>
+
+<div class="lh-auth-wrapper">
+    <div class="lh-auth-card">
+        <div class="text-center mb-4">
+            <div class="lh-auth-brand">Library<span>Hub</span></div>
+            <p class="text-muted mb-0">Sign in to your account</p>
+        </div>
+
+        <div th:if="${param.error}" class="alert alert-danger py-2">
+            Incorrect username or password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success py-2">
+            You've been logged out.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Log in</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            <a th:href="@{/}">&larr; Back home</a> &middot;
+            New member? <a th:href="@{/register}">Register</a>
+        </p>
+    </div>
+</div>
+
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

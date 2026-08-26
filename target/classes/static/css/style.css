@@ -1,0 +1,182 @@
+:root {
+    --lh-ink: #1B2A4A;
+    --lh-ink-light: #26375F;
+    --lh-bg: #F6F7F9;
+    --lh-surface: #FFFFFF;
+    --lh-burgundy: #7A2E3B;
+    --lh-burgundy-dark: #5F2430;
+    --lh-gold: #C9A227;
+    --lh-text: #23262B;
+    --lh-text-muted: #6B7280;
+    --lh-border: #E5E7EB;
+}
+
+body {
+    background: var(--lh-bg);
+    color: var(--lh-text);
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+h1, h2, h3, h4, .lh-brand, .lh-display {
+    font-family: 'Newsreader', Georgia, serif;
+    letter-spacing: -0.01em;
+}
+
+a { color: var(--lh-burgundy); }
+a:hover { color: var(--lh-burgundy-dark); }
+
+.lh-wrapper { display: flex; min-height: 100vh; }
+
+.lh-sidebar {
+    background: var(--lh-ink);
+    width: 240px;
+    flex-shrink: 0;
+    min-height: 100vh;
+    padding: 1.25rem 0;
+}
+
+.lh-sidebar .lh-brand {
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 600;
+    padding: 0 1.25rem 1.25rem;
+    display: block;
+}
+
+.lh-sidebar .lh-brand span { color: var(--lh-gold); }
+
+.lh-sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.72);
+    padding: 0.6rem 1.25rem;
+    border-left: 3px solid transparent;
+    font-size: 0.94rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.lh-sidebar .nav-link:hover {
+    color: #fff;
+    background: var(--lh-ink-light);
+}
+
+.lh-sidebar .nav-link.active {
+    color: #fff;
+    background: var(--lh-ink-light);
+    border-left-color: var(--lh-gold);
+    font-weight: 500;
+}
+
+.lh-sidebar hr {
+    border-color: rgba(255, 255, 255, 0.15);
+    margin: 0.75rem 1.25rem;
+}
+
+.lh-main { flex: 1; min-width: 0; }
+
+.lh-topbar {
+    background: var(--lh-surface);
+    border-bottom: 1px solid var(--lh-border);
+    padding: 0.75rem 1.5rem;
+}
+
+.lh-content { padding: 1.75rem; }
+
+@media (max-width: 991.98px) {
+    .lh-sidebar { position: fixed; z-index: 1040; }
+}
+
+.lh-card {
+    background: var(--lh-surface);
+    border: 1px solid var(--lh-border);
+    border-radius: 0.6rem;
+}
+
+.lh-stat-card { padding: 1.25rem 1.4rem; }
+
+.lh-stat-value {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.lh-stat-label {
+    color: var(--lh-text-muted);
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.btn-primary {
+    background-color: var(--lh-burgundy);
+    border-color: var(--lh-burgundy);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--lh-burgundy-dark);
+    border-color: var(--lh-burgundy-dark);
+}
+.btn-outline-primary {
+    color: var(--lh-burgundy);
+    border-color: var(--lh-burgundy);
+}
+.btn-outline-primary:hover {
+    background-color: var(--lh-burgundy);
+    border-color: var(--lh-burgundy);
+}
+
+.table thead th {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--lh-text-muted);
+    border-bottom-width: 1px;
+    font-weight: 600;
+}
+.table > :not(caption) > * > * { padding: 0.75rem 1rem; }
+
+.badge-issued { background: var(--lh-ink); }
+.badge-returned { background: #3F7A57; }
+.badge-overdue { background: var(--lh-burgundy); }
+.badge-gold { background: var(--lh-gold); color: var(--lh-ink); }
+
+.lh-auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, var(--lh-ink) 0%, var(--lh-ink) 45%, var(--lh-bg) 45%);
+}
+
+.lh-auth-card {
+    background: var(--lh-surface);
+    border-radius: 0.75rem;
+    box-shadow: 0 20px 50px rgba(27, 42, 74, 0.25);
+    max-width: 420px;
+    width: 100%;
+    padding: 2.25rem;
+}
+
+.lh-auth-brand {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--lh-ink);
+}
+.lh-auth-brand span { color: var(--lh-burgundy); }
+
+.lh-hero {
+    background: var(--lh-ink);
+    color: #fff;
+    padding: 5rem 1.5rem;
+}
+.lh-hero h1 {
+    font-size: 2.75rem;
+    font-weight: 600;
+}
+.lh-hero .lh-gold-rule {
+    width: 56px;
+    height: 3px;
+    background: var(--lh-gold);
+    margin-bottom: 1.25rem;
+}

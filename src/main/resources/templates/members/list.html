@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(title='Members')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="mb-1">Members</h2>
+                    <p class="text-muted mb-0">Everyone registered with the library.</p>
+                </div>
+                <a th:href="@{/admin/members/new}" class="btn btn-primary">+ Add Member</a>
+            </div>
+
+            <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <div class="lh-card p-3 mb-3">
+                <form th:action="@{/admin/members}" method="get" class="d-flex gap-2">
+                    <input type="text" name="keyword" th:value="${keyword}" class="form-control"
+                           placeholder="Search by name or email...">
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </form>
+            </div>
+
+            <div class="lh-card">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Joined</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="member : ${members.content}">
+                                <td th:text="${member.name}">Name</td>
+                                <td th:text="${member.email ?: '-'}">Email</td>
+                                <td th:text="${member.phone ?: '-'}">Phone</td>
+                                <td th:text="${#temporals.format(member.joinDate, 'MMM d, yyyy')}">Date</td>
+                                <td class="text-end">
+                                    <a th:href="@{/admin/members/{id}(id=${member.id})}"
+                                       class="btn btn-sm btn-outline-secondary">View</a>
+                                    <a th:href="@{/admin/members/{id}/edit(id=${member.id})}"
+                                       class="btn btn-sm btn-outline-secondary">Edit</a>
+                                    <form th:action="@{/admin/members/{id}/delete(id=${member.id})}" method="post"
+                                          class="d-inline" onsubmit="return confirm('Delete this member?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr th:if="${members.content.isEmpty()}">
+                                <td colspan="5" class="text-center text-muted py-4">No members yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-3" th:if="${members.totalPages > 1}">
+                    <nav th:replace="~{fragments/pagination :: pager(page=${members}, baseUrl='/admin/members', keyword=${keyword})}"></nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

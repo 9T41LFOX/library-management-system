@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head(title='Issue Book')}"></head>
+<body>
+<div class="lh-wrapper">
+    <aside th:replace="~{fragments/layout :: sidebar}"></aside>
+    <div class="lh-main">
+        <nav th:replace="~{fragments/layout :: navbar}"></nav>
+        <div class="lh-content">
+
+            <h2 class="mb-1">Issue Book</h2>
+            <p class="text-muted mb-4">A member can hold up to 3 books at a time, for 15 days each.</p>
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+            <div class="lh-card p-4" style="max-width:520px;">
+                <form th:action="@{/admin/borrow/issue}" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Member</label>
+                        <select class="form-select" name="memberId" required>
+                            <option value="">-- Select Member --</option>
+                            <option th:each="member : ${members}" th:value="${member.id}" th:text="${member.name}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Book</label>
+                        <select class="form-select" name="bookId" required>
+                            <option value="">-- Select Available Book --</option>
+                            <option th:each="book : ${books}" th:value="${book.id}"
+                                    th:text="${book.title + ' (' + book.availableQuantity + ' available)'}"></option>
+                        </select>
+                        <div class="form-text" th:if="${books.isEmpty()}">No books are currently available to issue.</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Issue Book</button>
+                    <a th:href="@{/admin/borrow}" class="btn btn-outline-secondary">Cancel</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
